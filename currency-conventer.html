@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>currency converter</title>
+	<style>
+		
+		#container{
+
+			width: 400px;
+			height: 400px;
+			margin-top: 20px;
+			margin: auto;
+		}
+	</style>
+</head>
+<style type="text/css"></style>
+<body onload="convert()">
+<div id="container">
+	<h1>currency converter</h1>
+   <input type="text" id="framount" value="1">
+   <select id="from" onchange="convert()">
+   	<option value="USD">Us Dollar</option>
+   	<option value="EUR">Euro</option>
+   	<option value="JPY">japanese Yen</option>
+   	<option value="CAD">Canadian dollar</option>
+   </select><br>
+  <input type="text" id="toamount" disabled="on" >
+  <select id="to" onchange="convert()">
+   	<option value="USD">Us Dollars</option>
+   	<option value="EUR">Euro</option>
+   	<option value="JPY">japanese Yen</option>
+   	<option value="CAD">Canadian dollar</option>
+
+   </select>
+</div>
+
+
+
+
+<script>
+	
+     
+
+	let convert =() => {
+		let from = document.getElementById("from").value;
+      let to = document.getElementById("to").value;
+
+    let xhr = new XMLHttpRequest();
+
+     
+    
+    let url = "https://api.exchangeratesapi.io/latest?base=USD&symbols="+to+','+from;
+
+        xhr.open("GET",url,true);
+        xhr.send();
+        
+        xhr.onload = function() {
+  
+   let dat = xhr.responseText; 
+   let datjs= JSON.parse(dat);
+     let res= datjs.rates[to]/datjs.rates[from];
+      var inp =document.getElementById('framount').value;
+      document.getElementById('toamount').value = res*inp;
+  
+}
+	}
+  
+
+
+
+</script>
+
+</body>
+</html>
